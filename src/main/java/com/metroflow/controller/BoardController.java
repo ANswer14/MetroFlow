@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,8 +35,16 @@ public class BoardController {
     // /board?page=1
     // 보드 페이징 처리 컨트롤러
     @GetMapping("/board")
-    public String goBoard(@PageableDefault(page = 1) Pageable pageable, Model model) {
-        Page<BoardForm> boardList = BOARDSERVICE.paging(pageable); // 페이징 처리된 보드들 리스트
+    public String goBoard(@PageableDefault(page = 1) Pageable pageable, Model model, @RequestParam(value = "isMyBoardsOption", required = false) boolean isMyBoardsOption) {
+        Page<BoardForm> boardList = null;
+        System.out.println(isMyBoardsOption);
+        if (isMyBoardsOption) {
+            System.out.println("it is true");
+            boardList = BOARDSERVICE.myBoardsPaging(pageable);
+        } else {
+            System.out.println("it is false");
+            boardList = BOARDSERVICE.allBoardsPaging(pageable); // 페이징 처리된 보드들 리스트
+        }
 
         int blockLimit = 5; // 한번에 보일 페이지 갯수 제한
         int startPage = (((int) Math.ceil(((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
@@ -122,5 +131,16 @@ public class BoardController {
             return new ResponseEntity<>(headers, HttpStatus.FOUND); // redirection을 하겠다는 의미, 이것만 있으면 작동 X
         }
         return new ResponseEntity<>(headers, HttpStatus.FOUND); // redirection을 하겠다는 의미, 이것만 있으면 작동 X, js에서 다뤄줘야 함(response.redirected)
+    }
+
+    @GetMapping("/board/isMyBoards")
+    public ResponseEntity<Map<String, String>> judgeOption(@RequestParam(value = "isMyBoardsOption", required = false) String isMyBoardsOption) {
+        System.out.println("isMy value : " + isMyBoardsOption);
+        boolean result = isMyBoardsOption.equals("myBoards");
+        System.out.println("result value : " + result);
+        String url = "/board?isMyBoardsOption=" + result;
+        Map<String, String> response = new HashMap<>();
+        response.put("redirectUrl", url);
+        return ResponseEntity.ok(response);
     }
 }

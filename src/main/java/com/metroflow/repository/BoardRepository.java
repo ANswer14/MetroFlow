@@ -1,11 +1,16 @@
 package com.metroflow.repository;
 
 import com.metroflow.model.dto.Board;
+import com.metroflow.model.dto.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Transactional // select문이 아닌 쿼리에서는 사용해야 함
 public interface BoardRepository extends JpaRepository<Board, Long> {
@@ -47,4 +52,10 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
             " set board.isNoticeBoard = :isNoticeBoard" +
             " where board.boardNo = :boardNo")
     void updateBoardByBoardNo(boolean isNoticeBoard, Long boardNo);
+
+    // 유저 id로 그 유저의 모든 보드들 가져오기
+    @Query(value = "select board" +
+            " from Board board " +
+            " where board.user = :user")
+    Page<Board> findBoardsByUserId(@Param("user") User user, Pageable pageable);
 }

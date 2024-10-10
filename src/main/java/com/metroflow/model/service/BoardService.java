@@ -57,7 +57,7 @@ public class BoardService {
 
     // 페이징 처리 로직
     @Transactional(readOnly = true)
-    public Page<BoardForm> paging(Pageable pageable) {
+    public Page<BoardForm> allBoardsPaging(Pageable pageable) {
         int page = pageable.getPageNumber() - 1; // 인덱스 값이라 보일 값보다 -1 해줘야함
         int pageLimit = 8; // 한 페이지에 보여줄 글 갯수
         // 한 페이지당 8개씩 글을 보여주고 정렬 기준은 boardNo 기준으로 내림차순 정렬
@@ -74,6 +74,25 @@ public class BoardService {
 //        System.out.println("boards.hasPrevious() = " + boards.hasPrevious()); // 이전 페이지 존재 여부
 //        System.out.println("boards.isFirst() = " + boards.isFirst()); // 첫 페이지 여부
 //        System.out.println("boards.isLast() = " + boards.isLast()); // 마지막 페이지 여부
+
+        // 목록 : No, userId, title, createdTime
+        // 엔티티 객체를 DTO 객체로 옮겨담음
+        return boards.map(board -> new BoardForm(board.getBoardNo(),
+                BOARDREPOSITORY.findById(board.getBoardNo()).get().getUser(),
+                board.getStationLine(), board.getTitle(), board.getCreatedTime(), board.getThumbsUp(),
+                board.getView(), board.isNoticeBoard()));
+    }
+
+    @Transactional(readOnly = true)
+    public Page<BoardForm> myBoardsPaging(Pageable pageable) {
+        User user = USERSERVICE.getUserObject();
+        int page = pageable.getPageNumber() - 1; // 인덱스 값이라 보일 값보다 -1 해줘야함
+        int pageLimit = 8; // 한 페이지에 보여줄 글 갯수
+        // 한 페이지당 8개씩 글을 보여주고 정렬 기준은 boardNo 기준으로 내림차순 정렬
+        // page 위치에 있는 값은 0부터 시작
+        // 모든 보드들을 페이징 처리
+        Page<Board> boards =
+                BOARDREPOSITORY.findBoardsByUserId(user, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "boardNo")));
 
         // 목록 : No, userId, title, createdTime
         // 엔티티 객체를 DTO 객체로 옮겨담음
