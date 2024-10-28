@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>MetroFlow</title>
+    <link href="/css/menu.css" rel="stylesheet">
+    <link href="/css/congestion.css" rel="stylesheet">
+</head>
+<body>
+    <div th:insert="~{fragments/menu :: menuBar}"></div>
+
+    <div id="content">
+        <div id="middleArea">
+
+            <div class="whatIsCongestion">
+                <div class="whatIsCongestion_header">
+                    <h1>혼잡도란?</h1>
+                </div>
+
+                <div class="whatIsCongestion_description">
+                ◈ 열차의 정원 대비 승차 인원을 백분율로 나타낸 수치입니다. <br><br>
+                    ◈ MetroFlow에서는 수도권 지역의 1호선부터 9호선까지의 열차 혼잡도를 <br>
+                    &nbsp&nbsp&nbsp&nbsp'여유', '보통', '혼잡'으로 구분하여 제공합니다.
+                </div>
+            </div>
+
+            <div>
+                <h3>여유</h3>
+                <img src="/images/cong_green.png"><br>
+                좌석에 승객이 모두 앉을 수 있는 상태입니다.<br>
+                (혼잡도 0 ~ 33 %)
+            </div>
+
+            <div>
+                <h3>보통</h3>
+                <img src="/images/cong_yellow.png"><br>
+                좌석이 모두 채워져 있고, 탑승시 통로에 줄을 서게 되는 상태입니다.<br>
+                (혼잡도 34 ~ 66 %)
+            </div>
+
+            <div>
+                <h3>혼잡</h3>
+                <img src="/images/cong_red.png"><br>
+                통로, 출입문 모두에 2줄 이상의 줄이 만들어진 상태입니다.<br>
+                (혼잡도 67 % 이상)
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

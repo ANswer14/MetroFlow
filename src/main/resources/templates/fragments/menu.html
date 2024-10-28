@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인화면</title>
+    <link href="/css/menu.css" rel="stylesheet">
+    <script></script>
+</head>
+<body>
+
+<div th:fragment="menuBar">
+
+    <!-- 체크박스를 사용하여 메뉴를 제어 -->
+    <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+
+    <!-- "메뉴" 텍스트 클릭 시 체크박스를 조작하도록 for 속성 사용 -->
+    <label for="menu-toggle" class="menu-label">
+        <span class="menu-link"><img src="/images/menu.png" alt="Menu Icon" class="m_icon"> 메뉴</span>
+    </label>
+    <!-- 로고 영역 - 중앙 정렬 -->
+    <div class="logo-container">
+        <a href="/home"><img src="/images/metroFlowLogo.png" alt="로고" class="logo"><img src="/images/metroFlowArticle.png" alt="로고 글귀" class="logo"></a>
+
+        <!-- 로그인 및 회원가입 -->
+        <div class="guestMember">
+            <div sec:authorize="!isAuthenticated()" class="guest">
+                <a href="/goLogin" class="login btn btn-outline-light" role="button">로그인</a>
+                <a href="/goRegister" class="register btn btn-outline-light" role="button">회원가입</a>
+            </div>
+        </div>
+            <div sec:authorize="isAuthenticated()" class="member">
+                <img id="userImage" th:src="${sessionUser.userImgPath}">
+                <a href="/logout" class="logout btn btn-outline-light" role="button">로그아웃</a>
+                <a href="/myProfile" class="myPage btn btn-outline-light" role="button">내 정보</a>
+            </div>
+        <!-- 로고 이미지 경로 추가 -->
+    </div>
+
+    <!-- 메뉴 바 - 각 메뉴에 경로 필요 -->
+    <nav class="navbar" id="sidebar">
+            <ul class="nav-items" th:if="${sessionUser == null || #sets.contains(sessionUser.userRole, 'user') || #sets.contains(sessionUser.userRole, 'admin')}">
+                <li><a href="/goSearch">역 검색</a></li>
+                <li><a href="/goFavoriteList">즐겨찾기</a></li>
+                <li><a href="#">내 주변</a></li>
+                <li><a href="/goCongestion">혼잡도란?</a></li>
+                <li><a href="/board" th:if="${sessionUser == null || #sets.contains(sessionUser.userRole, 'user')}">게시판</a></li>
+                <li sec:authorize="hasAuthority('admin')"><a href="/admin/userList">유저 리스트</a></li>
+                <li sec:authorize="hasAuthority('admin')"><a href="/board">게시판 관리</a></li>
+            </ul>
+    </nav>
+</div>
+</body>
+</html>

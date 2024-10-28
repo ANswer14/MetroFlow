@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>MetroFlow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="/css/menu.css" rel="stylesheet">
+    <link href="/css/home.css" rel="stylesheet">
+    <link href="/css/subwayMap/subwaymap.css" rel="stylesheet">
+    <link href="/css/subwayMap/favorite.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div th:insert="~{fragments/menu :: menuBar}"></div>
+
+<div class="content-wrapper">
+    <div class="sidebar">
+        <!-- 긴급 사안 카드 -->
+        <div class="alert-card">
+            <div class="alert-header">
+                <h5 class="alert-title">⚠️ 긴급 사안</h5>
+            </div>
+            <ul th:each="notice, stat: ${notices}">
+                <li>
+                   <div class="alert-item">
+                       <a class="alert-clicked" th:href="'/board/content?boardNo=' + ${notice.boardNo}" th:text="${notice.board.title}"></a>
+                       <p th:text="${notice.board.boardText}"></p>
+                   </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 최근 검색 -->
+        <div class="recent-searches">
+            <h6>🕒 최근 검색</h6>
+            <ul id="search-list">
+            </ul>
+        </div>
+    </div>
+
+        <!-- 지도 공간을 중앙에 위치 -->
+        <div class="middleArea">   <!-- 가운데 노선도 나올 공간, resources-img-img.png 지하철 노선도 사진-->
+            <div th:insert="~{fragments/subwayMap::subwayMap}" class="subwayMap">
+<!--                <img src="/images/subwayMap.png" alt="지하철 노선도" class="img-fluid">-->
+            </div>
+        </div>
+    </div>
+<script src="/js/subwayMap/modalscript3.js" defer></script> <!-- 스크립트 파일을 defer로 로드 -->
+<script src="/js/subwayMap/zoom2.js" defer></script> <!-- 스크립트 파일을 defer로 로드 -->
+<script src = "/js/subwayMap/mouseEvent.js" defer></script>
+<!--js에서 타임리프 사용을 위한 스크립트-->
+
+</body>
+<script src="/js/home.js"></script>
+</html>

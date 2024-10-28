@@ -1,0 +1,81 @@
+/* 즐겨찾기 별 모양 구현 */
+.favorite {
+    color: transparent; /* 별 내부 초기 색상 투명 */
+
+    cursor: pointer; /* 커서를 손 모양으로 변경 */
+    display: inline-block; /* 인라인 블록으로 설정 */
+    transition: transform 0.2s; /* 클릭 시 애니메이션 효과 */
+    /* 위치 조정 */
+    margin-left: 20px; /* 원하는 만큼의 왼쪽 여백 조정 */
+    margin-top: 0; /* 필요에 따라 세로 위치 조정 */
+}
+
+
+.favorite:hover {
+    transform: scale(1.1); /* 마우스 오버 시 확대 */
+}
+
+#favoriteModal{
+    display: none; /* 기본적으로 숨김 */
+    position: fixed;
+    z-index: 1000; /* 가장 위에 표시 */
+    overflow: auto; /* 스크롤 가능 */
+    background-color: rgba(0, 0, 0, 0); /* 배경 */
+}
+
+#favoriteModal-content{
+    background-color: #fff; /* 콘텐츠 배경색 */
+    border-radius: 8px;
+    border: 1px solid #888;
+    width: 50%; /* 너비 조정 가능 */
+}
+
+#favoriteModal_table{
+    width: 100%; /* 테이블 너비를 100%로 설정 */
+    border-collapse: collapse; /* 테두리 간의 간격 없애기 */
+}
+
+#favoriteModal_table tr {
+    border-bottom: 1px solid #ccc; /* 아래쪽 외곽선 추가 */
+}
+
+#favoriteModal_table tr:last-child {
+    border-bottom: none; /* 마지막 행의 아래쪽 외곽선 제거 */
+}
+
+/*즐겨찾기 등록, 삭제 td*/
+#favoriteModal_table td{
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#favoriteModal-header {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    align-items: center;
+    padding: 10px;
+    background-color: #001f3f; /* 헤더 배경색 */
+    color: white; /* 텍스트 색상 */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+#favoriteModal-body {
+    padding: 10px; /* 패딩 추가 */
+    height: calc(100% - 2px); /* 바디 높이를 헤더를 제외한 나머지로 설정 */
+    overflow-y: auto; /* 내용이 많을 경우 스크롤 추가 */
+}
+
+.favoriteCloseTab {
+    cursor: pointer; /* 마우스 커서가 포인터로 바뀌도록 */
+    font-size: 24px; /* 버튼 크기 조정 */
+    margin-left: auto; /* 자동 여백으로 오른쪽 정렬 */
+}
+
+.favoriteCloseTab:hover,
+.favoriteCloseTab:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+

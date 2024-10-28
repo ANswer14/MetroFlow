@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetroFlow</title>
+    <link rel="stylesheet" href="/css/board/board.css">
+    <link href="/css/menu.css" rel="stylesheet">
+</head>
+<body>
+<div th:insert="~{fragments/menu :: menuBar}"></div>
+
+<div id="container">
+    <h1>게시판</h1>
+    <p>역에 관련된 내용을 적는 곳입니다. 실시간 역 사고 내용을 적어 주시길 바랍니다.</p>
+
+    <a href="/board/writeBoard" class="write-btn">글쓰기</a>
+
+    <label class="select-label">
+        <select id="boardOption" name="boardOption">
+            <option value="allBoards" th:selected="${selectedOption == 'allBoards'}">전체 게시글</option>
+            <option value="myBoards" th:selected="${selectedOption == 'myBoards'}">내 게시글</option>
+        </select>
+    </label>
+    <table class="board-table">
+        <thead>
+        <tr>
+            <th>번호</th> <!-- 새로 올라올 때마다 번호 매길 수 있는 기능 구현 시도 -->
+            <th>역 이름</th> <!-- 태그 열 추가 -->
+            <th>호선</th> <!-- 태그 열 추가 -->
+            <th>제목</th> <!-- 제목이 보이도록 기능 수정 -->
+            <th>글쓴이</th> <!-- 닉네임이 보이도록 기능 수정 -->
+            <th>날짜</th> <!-- 날짜는 작성 날짜가 보이도록 수정이 필요 -->
+            <th>조회 수</th> <!-- 조회 수 체크할 수 있는 기능이 있다면 한번 구현 시도 -->
+            <th>좋아요</th> <!-- 좋아요 열 추가 -->
+            <th sec:authorize="hasAuthority('admin')">삭제</th> <!-- 어드민일 시 삭제 버튼 보임 클릭 시 삭제 -->
+            <th sec:authorize="hasAuthority('admin')">긴급 공지</th> <!-- 어드민일 시 긴급 공지 란 보임 해당 게시물의 선택 누르면 공지로 가짐 -->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="boardL, stat: ${boardList}" th:id="'boardRow_' + ${boardL.boardNo}"> <!-- 보드컨트롤러에서 받아온 페이징된 보드 객체들 -->
+                <td th:text="${boardL.boardNo}"></td> <!-- 보드 시퀀스 -->
+                <td th:text="${boardL.stationLine}" th:class="${boardL.stationLine}"></td> <!-- 보드 역 명 -->
+                <td th:text="${boardL.stationName}" th:class="${boardL.stationName}"></td> <!-- 보드 역 명 -->
+                <td><a th:href="@{|/board/content|(boardNo=${boardL.boardNo})}" th:text="${boardL.title}"></a></td>
+                <!-- 보드 title, 클릭 시 해당 보드의 내용 페이지로 넘어감 -->
+                <td th:text="${boardL.user.userId}"></td> <!-- 보드 글쓴이 -->
+                <td th:text="*{#temporals.format(boardL.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td> <!-- 보드 게시 날짜 -->
+                <td th:text="${boardL.view}"></td> <!-- 보드 조회수 -->
+                <td th:text="${boardL.thumbsUp}"></td> <!-- 보드 좋아요 수 -->
+                <td sec:authorize="hasAuthority('admin')" id="deleteBoard" th:onclick="'deleteBoard(' + ${boardL.boardNo} + ', ' + 'boardRow_' + ${boardL.boardNo} + ')'" class="delete-cell">삭제</td>
+                <td sec:authorize="hasAuthority('admin')">
+                    <input type="hidden" th:id="${boardL.boardNo}" th:value="${boardL.isNoticeBoard}">
+                    <div th:id="'noticeSelectionDiv' + ${boardL.boardNo}">
+                        선택
+                    </div>
+                </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <!-- 첫 페이지 및 이전 버튼 -->
+        <a class="paging" th:href="${boardList.first} ? '#' : @{/board(page=1)}">첫 페이지</a>
+        <a class="paging" th:href="${boardList.first} ? '#' : @{/board(page=${boardList.number})}"> 이전 </a>
+
+        <!-- 페이지 번호 링크 반복문 -->
+        <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
+        <!-- 현재 페이지는 링크 없이 숫자만 표시 -->
+        <span th:if="${page == boardList.number + 1}" class="page-number active" th:text="${page}"></span>
+            <!-- 현재 페이지가 아닌 경우 링크와 페이지 번호 클래스 적용 -->
+        <span th:unless="${page == boardList.number + 1 || page == 0}">
+            <a class="paging page-number" th:href="@{/board(page=${page})}" th:text="${page}"></a>
+        </span>
+    </span>
+
+        <!-- 다음 링크 활성화 비활성화 -->
+        <a class="paging" th:href="${boardList.last} ? '#' : @{/board(page=${boardList.number + 2})}"> 다음 </a>
+        <a class="paging" th:href="${boardList.last} ? '#' : @{/board(page=${boardList.totalPages})}"> 마지막 페이지</a>
+    </div>
+
+</div>
+<input type="hidden" th:value="${noticeCount}" id="noticeCount">
+<script src="/js/board/board.js"></script>
+</body>
+</html>

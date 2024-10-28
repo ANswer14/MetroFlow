@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/> <!-- csrf 토큰 -->
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/> <!-- csrf 토큰 header 이름 -->
+    <title>MetroFlow</title>
+    <link rel="stylesheet" href="/css/board/boardContent.css">
+    <script src="/js/board/boardContent.js"></script>
+    <link href="/css/menu.css" rel="stylesheet">
+</head>
+<body>
+<div th:insert="~{fragments/menu :: menuBar}"></div>
+
+<div class="container">
+    <form th:action="@{/board}">
+        <button class="btn-back">목록</button>
+    </form>
+
+    <!-- 게시글 제목 -->
+    <div class="post-header">
+        <h2 th:text="${board.title}" th:field="${board.title}"></h2>
+    </div>
+    <div class="stationDiv">
+        <h3 th:text="${board.stationLine}"></h3>
+        <h3 th:text="${board.stationName}" th:field="${board.stationName}"></h3>
+    </div>
+    <!-- 게시글 작성자 이미지-->
+    <div class="post-meta">
+        <img th:src="${board.user.userImgPath}" alt="작성자 이미지" class="author-img">
+        <div class="meta-info">
+            <span class="username" th:text="${board.user.nickname}">hello</span><!-- 게시글 작성자 닉네임 -->
+            <span class="date" th:text="*{#temporals.format(board.createdTime, 'yyyy-MM-dd HH:mm:ss')}">2024.05.25. 10:51</span>
+            <!-- 게시글 작성 날짜 -->
+        </div>
+    </div>
+
+    <div class="post-content">
+        <p th:text="${board.boardText}"><!-- 게시글 내용 -->
+        </p>
+    </div>
+
+    <!-- 게시글 좋아요 -->
+    <div class="post-actions">
+        <div class="action-item">
+            <div class="thumbsUpContainer" id="thumbsUpContainer">
+                <img src="/images/thumbsup.png" alt="좋아요 아이콘" class="icon">
+            </div>
+            <span class="label">좋아요</span>
+            <label for="thumbsUpCount"></label><input type="text" readonly="readonly" class="count" id="thumbsUpCount"
+                                                      th:value="${board.thumbsUp}">
+            <!-- 게시글 싫어요 -->
+        </div>
+        <div th:class="action-item">
+            <div class="thumbsDownContainer" id="thumbsDownContainer">
+                <img src="/images/thumbsdown.png" alt="싫어요 아이콘" class="icon">
+            </div>
+            <span class="label">싫어요</span>
+            <label for="thumbsDownCount"></label><input type="text" readonly="readonly" class="count"
+                                                        id="thumbsDownCount" th:value="${board.thumbsDown}">
+            <!-- 게시글 싫어요 수 -->
+        </div>
+    </div>
+
+    <!-- 하단 수정/삭제 버튼 -->
+    <div class="footer-buttons">
+        <div class="footer-right">
+            <form th:action="@{/board/updateBoard}"><!-- 버튼 클릭 시 updateBoard -->
+                <input type="hidden" name="no" th:value="${board.boardNo}"/>
+                <button type=submit class="btn btn-edit" th:if="${board.user.userId} == ${sessionUser.userId}">글수정
+                </button>
+            </form>
+            <form th:action="@{/board/delete}" id="button_delete"><!-- 버튼 클릭 시 게시글 삭제 -->
+                <input type="hidden" name="no" th:value="${board.boardNo}" id="boardNo"/>
+                <button class="btn btn-delete" th:if="${board.user.userId} == ${sessionUser.userId}">삭제</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="thumbsUp" th:value="${userRec.isThumbsUp()}">
+<input type="hidden" id="thumbsDown" th:value="${userRec.isThumbsDown()}">
+<input type="hidden" id="priorThumbsUp" th:value="${userRec.isThumbsUp()}">
+<input type="hidden" id="priorThumbsDown" th:value="${userRec.isThumbsDown()}">
+</body>
+</html>

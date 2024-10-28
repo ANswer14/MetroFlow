@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MetroFlow</title>
+    <link href="/css/menu.css" rel="stylesheet">
+    <link href="/css/user/userList.css" rel="stylesheet">
+</head>
+<body>
+<div th:insert="~{fragments/menu :: menuBar}"></div>
+<div class="card-container"> <!-- 카드 컨테이너 추가 -->
+    <h1>User 리스트</h1>
+    <table class="user-list-table"> <!-- 테이블 클래스 추가 -->
+        <thead>
+        <tr>
+            <th>User ID</th>
+            <th>User 닉네임</th>
+            <th>User Role</th>
+        </tr>
+        </thead>
+        <tr th:each="user : ${userList}">
+            <td th:text="${user.userId}"></td>
+            <td th:text="${user.nickname}"></td>
+            <td><span th:each="role : ${user.userRole}"><span th:text="${role}"></span></span></td>
+        </tr>
+    </table>
+    <div class="pagination">
+        <!--        /board?page=1-->
+        <a th:href="@{/admin/userList(page=1)}">첫 페이지 </a>
+        <!-- 이전 링크 활성화 비활성화 -->
+        <a th:href="${userList.first} ? '#' : @{/admin/userList(page=${userList.number})}"> 이전 </a>
+
+        <!-- 페이지 번호 링크 -->
+        <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
+            <span th:if="${page == userList.number + 1}" th:text="${page}"></span>
+            <span th:unless="${page == userList.number + 1}">
+                <a th:href="@{/admin/userList(page=${page})}" th:text="${page}"></a>
+            </span>
+        </span>
+
+        <!-- 다음 링크 -->
+        <a th:href="${userList.last} ? '#' : @{/admin/userList(page=${userList.number + 2})}"> 다음 </a>
+        <!-- 마지막 페이지로 이동 -->
+        <a th:href="@{/admin/userList(page=${userList.totalPages})}"> 마지막 페이지</a>
+    </div>
+</div> <!-- 카드 컨테이너 닫음 -->
+</body>
+</html>
