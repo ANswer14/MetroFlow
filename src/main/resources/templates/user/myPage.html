@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/myPage.js"></script>
+    <title>MetroFlow</title>
+    <link href="/css/user/myPage.css" rel="stylesheet" type="text/css">
+    <link href="/css/menu.css" rel="stylesheet">
+</head>
+<body>
+<div th:insert="~{fragments/menu :: menuBar}"></div>
+<!--/* 회원 프로필 DB 가져와야댐 */-->
+<div class="container">
+    <h2>회원 정보 수정</h2>
+
+
+    <!-- 에러 메시지 출력 -->
+    <div th:if="${errorMessage}">
+        <p style="color: red;" th:text="${errorMessage}"></p>
+    </div>
+
+    <form method="post" th:action="@{/user/update}" id="profileForm" >
+        <div class="profile-picture">
+            <img id="profilePic" th:src="${sessionUser != null ? sessionUser.userImgPath : '/images/img_4.png'}" alt="프로필 사진">
+
+            <!-- 애플리케이션에 사용자 세션이 포함된 경우 CSRF 공격으로부터 보호하기 위해 양식에 CSRF 토큰을 추가 -->
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+            <!-- 선택된 이미지를 담을 숨겨진 input -->
+            <input type="hidden" id="selectedProfilePic" name="userImgPath" value="">
+            <!--선택된 이미지 경로를 저장하고 서버로 전송합니다.-->
+
+            <!-- 모달 열기 버튼과 모달 자체 -->
+            <button type="button" id="openModalButton">프로필 사진 변경</button>
+
+            <div id="profileModal" class="modal" aria-hidden="true">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>프로필 사진 변경</h2>
+                    <p>여기서 새로운 프로필 사진을 정해주세요.</p>
+
+                    <div class="image-options">
+                        <img src="/images/train.png" alt="이미지1" class="selectable-image">
+                        <img src="/images/train_2.png" alt="이미지1" class="selectable-image">
+                        <img src="/images/train_3.png" alt="이미지1" class="selectable-image">
+                        <img src="/images/train_4.png" alt="이미지4" class="selectable-image">
+                        <img src="/images/train_5.png" alt="이미지5" class="selectable-image">
+                        <img src="/images/train_6.png" alt="이미지6" class="selectable-image">
+                        <img src="/images/train_7.png" alt="이미지6" class="selectable-image">
+                        <img src="/images/train_8.png" alt="이미지8" class="selectable-image">
+                        <img src="/images/train_9.png" alt="이미지9" class="selectable-image">
+                    </div>
+
+                    <button id="changeProfilePic" type="button">변경</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- readonly 이용해서 수정 못하는 칸을 막았습니다 -->
+        <label for="username">아이디</label>
+        <input type="text" readonly="readonly" id="username" name="userId" placeholder="아이디" required minlength="3" maxlength="15" th:value="${sessionUser.userId}">
+
+        <label for="nickname">닉네임</label>
+        <input type="text" id="nickname" name="nickname"  placeholder="이름" required maxlength="10"  th:value="${sessionUser.nickname}">
+
+        <label for="email">이메일 주소</label>
+        <input type="text" id="email" name="userEmail" placeholder="이메일" th:value="${sessionUser.userEmail}">
+
+        <label for="currentPassword">현재 비밀번호</label>
+        <input type="password" id="currentPassword" name="currentPassword" required minlength="3" maxlength="20" placeholder="현재 비밀번호">
+
+        <label for="newPassword">새 비밀번호</label>
+        <!--각 입력 필드에 대한 aria-label 속성을 추가하면 접근성을 개선-->
+        <input type="password" id="newPassword" name="password" placeholder="새 비밀번호" required minlength="3" maxlength="20" aria-label="새 비밀번호">
+
+        <label for="confirmPassword">새 비밀번호 확인</label>
+        <!--각 입력 필드에 대한 aria-label 속성을 추가하면 접근성을 개선-->
+        <input type="password" id="confirmPassword" name="passwordCheck" placeholder="새 비밀번호 확인" required minlength="3" maxlength="20" aria-label="새 비밀번호 확인">
+
+        <!-- 회원 탈퇴 DB? 설정 하기 -->
+        <div class="buttons">
+            <button type="button" id="deleteAccount">회원 탈퇴</button>
+            <button type="submit" id="submitButton">수정 완료</button>
+        </div>
+
+    </form>
+</div>
+
+
+<!-- 자바스크립트 파일 연결 -->
+
+</body>
+</html>

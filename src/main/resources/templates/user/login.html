@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetroFlow</title>
+    <link href="/css/menu.css" rel="stylesheet">
+    <link href="/css/user/login.css" rel="stylesheet">
+    <script src="/js/user/login.js"></script>
+</head>
+<body>
+
+<div th:insert="~{fragments/menu :: menuBar}"></div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="title">Login</h2>
+
+            <form th:action="@{/login}" method="post">
+                <div class="form-group">
+                    <label for="username" class="form-label">아이디</label>
+                    <input th:type="text" class="form-control" name="username" id="username" placeholder="아이디 입력" maxlength="15">
+                    <span class="errorMessage" th:if="${session.IDError}" th:text="${session.IDError}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">비밀번호</label>
+                    <input th:type="password" class="form-control" name="password" id="password" placeholder="비밀번호 입력" maxlength="20">
+                    <span class="errorMessage" th:if="${session.PWError}" th:text="${session.PWError}"></span>
+                </div>
+<!--                <span class="errorMessage" th:if="${session.errorMessage}" th:text="${session.errorMessage}"></span>-->
+
+                <button type="submit" class="login-btn">로그인</button>
+            </form>
+            <div class="register-link">
+                <span>회원이 아니신가요? <a href="/goRegister">회원가입</a> 바랍니다.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

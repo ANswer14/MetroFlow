@@ -1,0 +1,156 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    font-family: Arial, sans-serif;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.btn-outline {
+    background-color: white;
+}
+
+.btn {
+    background-color: white;
+    color: black;
+}
+
+.btn:hover, .btn-outline:hover {
+    background-color: #e9ecef;
+}
+
+/* 콘텐츠 레이아웃 설정 */
+.content-wrapper {
+    display: flex;
+    padding: 1rem;
+}
+
+.sidebar {
+    flex: 1;
+    max-width: 300px;
+    padding: 20px;
+}
+
+/* 긴급 사안 카드 */
+.alert-card {
+    border: 2px solid firebrick;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    width: 300px; /* 긴급 사안 카드의 너비 */
+    margin-left: 20px; /* 왼쪽 여백 추가 */
+    margin-top: -18px; /* 위쪽 여백을 줄임 */
+}
+
+
+.alert-header {
+    background-color: #990011;
+    padding: 8px;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.alert-title {
+    padding-left: 55px;
+    color: white;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.alert-item {
+    padding: 5px;
+    margin-top: 8px;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+/* 최근 검색 */
+.recent-searches {
+    padding: 1rem;
+    background-color: #e9ecef;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    width: 285px;
+    position: relative;
+    margin-left: 20px; /* 왼쪽 여백 추가 */
+}
+
+.recent-searches h6 {
+    font-size: 1.3rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.search-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+/* 얘 없으면 메인화면 노선도 형식 깨짐*/
+.middleArea {
+    flex: 3;
+    padding: 20px;
+    /*justify-items: center;*/
+    align-items: center;
+    margin-left: 50px;
+    /*스크롤바 구현을 위한 설정*/
+    overflow: auto; /* 스크롤 가능하도록 설정 */
+    max-width: 100%; /* 최대 너비 설정 */
+    max-height: 680px; /* 최대 높이 설정 (필요에 따라 조정) */
+    border: 1px solid #ddd; /* 선택적 경계선 */
+    border-radius: 8px;
+}
+
+.middleArea::-webkit-scrollbar{
+    display: none;
+}
+
+/* 반응형 미디어 쿼리 */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .auth-buttons .btn-outline, .auth-buttons .btn-primary {
+        margin-top: 10px;
+    }
+
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+}
+
+/*!* .st52와 .st47 클래스를 동시에 가지는 <text>에 hover 시 커서 변경 *!*/
+/*.st52.st47 {*/
+/*    cursor: crosshair; !* 기본 커서 설정 *!*/
+/*}*/
+
+/* hover 시 커서 변경 */
+.st52.st47:hover {
+    cursor: url('/images/mouse/smileTrain_middle.cur'), auto; /* hover 시 갈고리로 커서 변경 */
+}
+
+.alert-clicked {
+    font-weight: 500;
+    text-decoration: none;
+    transition: font-weight 0.3s ease;
+}
+
+.alert-clicked:hover {
+    font-weight: 900;
+    text-decoration: none;
+}

@@ -1,0 +1,137 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#svgContainer {
+    position: relative; /* 상대 위치 설정 */
+    width: 100%; /* SVG 컨테이너 너비 설정 */
+    height: auto; /* SVG 컨테이너 높이 설정 */
+    max-width: 100%; /* 최대 너비 100%로 설정 */
+    max-height: 100%; /* 최대 높이 100%로 설정 */
+    overflow: auto; /* 스크롤 가능 */
+    margin: auto; /* 가운데 정렬 */
+    /* border: 1px solid #ccc; /* 경계선 추가 (선택사항) */
+}
+
+/* 확대/축소 버튼 css */
+#controls {
+    position: fixed; /* 고정 위치 설정 */
+    top: 350px; /* 상단에서의 거리 */
+    right: 30px; /* 우측에서의 거리 */
+    background: none;
+    padding: 10px; /* 내부 여백 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    z-index: 10; /* SVG 위에 표시 */
+}
+
+/*모달 스타일*/
+/*modal의 width는 스크립트에서 조절함*/
+.modal {
+    display: none; /* 기본적으로 숨김 */
+    position: fixed;
+    z-index: 1000; /* 가장 위에 표시 */
+    overflow: auto; /* 스크롤 가능 */
+    background-color: rgba(0, 0, 0, 0); /* 배경 */
+}
+
+#modal_table {
+    width: 100%; /* 테이블 너비를 100%로 설정 */
+    border-collapse: collapse; /* 테두리 간의 간격 없애기 */
+}
+
+#modal_table td {
+    padding: 10px; /* 셀 내부 패딩 */
+    border: 1px solid #ddd; /* 셀 테두리 색상 */
+    /*border : none;*/
+    text-align: left; /* 텍스트 정렬 */
+}
+
+.modal-content {
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #888;
+    width: 90%; /* 원하는 너비로 설정 */
+    border-radius: 5px; /* 모서리 둥글게 */
+}
+
+.modal-content #stationName {
+    margin: 0; /* 헤더 마진 제거 */
+    font-size: 1.5em; /* 헤더 글꼴 크기 */
+    text-align: left; /* 중앙 정렬 */
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between; /* 양쪽 끝으로 배치 */
+    align-items: center; /* 세로 정렬 */
+    padding: 10px; /* 패딩 추가 */
+}
+
+.closeTab {
+    cursor: pointer; /* 마우스 커서가 포인터로 바뀌도록 */
+    font-size: 24px; /* 버튼 크기 조정 */
+    margin-left: auto; /* 자동 여백으로 오른쪽 정렬 */
+}
+
+.closeTab:hover,
+.closeTab:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.zoomButton {
+    padding: 10px 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin: 16px 0;
+    position: relative; /* 위치를 상대적으로 설정 */
+    left: 10px;
+}
+
+.zoomButton:hover {
+    background-color: lightgray; /* 호버 시 배경색 변경 */
+}
+
+.s_icon {
+    width: 30px; /* 아이콘 크기 조정 */
+    height: 30px;
+    vertical-align: middle; /* 아이콘이 텍스트와 정렬 */
+}
+
+.nowTime {
+    font-family: 'Arial', sans-serif;  /* 글꼴 설정 */
+    font-size: 20px;                   /* 글자 크기 설정 */
+    background-color: rgba(255, 255, 255, 0.8); /* 배경색 설정 */
+    padding: 10px;                     /* 안쪽 여백 설정 */
+    display: inline-block;              /* 인라인 블록으로 설정 */
+}
+
+button:hover {
+    background-color: #a49e9e; /* 호버 시 배경색 변화 */
+}
+
+/*#mySVG text:hover {*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*즐겨찾기 span*/
+.time-container {
+    display: flex; /* Flexbox로 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    position: relative; /* 부모 요소에 상대 위치 설정 */
+}
+
+.nowTime {
+    font-size: 20px; /* 시간 텍스트 크기 */
+    margin-right: 5px; /* 별과의 간격 */
+}

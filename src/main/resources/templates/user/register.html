@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetroFlow</title>
+    <link href="/css/menu.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/user/register.js"></script>
+    <link href="/css/user/register.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="~{fragments/menu :: menuBar}"></div>
+
+<!-- 회원가입 폼 -->
+<div class="form-container">
+    <div class="card">
+        <div class="text-center">
+            <h2 class="fw-bold">회원 가입</h2>
+            <img id="selectedProfile" src="/images/img_4.png" class="rounded-circle mb-3" alt="선택된 프로필 사진" onclick="showModal()">
+            <p><small>프로필 사진을 클릭하여 이미지를 선택하세요.</small></p>
+        </div>
+
+        <form th:action="@{/register}" method="post">
+            <div class="registerInput">
+                <p th:if="${#fields.hasErrors('user.userId')}" th:errors="${user.userId}" th:errorclass="errorClass"></p><!-- userId의 조건 어길 시 에러 출력 -->
+                <p th:if="!${#fields.hasErrors('user.userId')}"></p><!-- 없을 시 공간 할당 -->
+                <label for="id"></label><input th:type="text" class="form-control input-small" th:field="${user.userId}" id="id" placeholder="ID 입력" max="15">
+            </div>
+            <div class="registerInput">
+                <p th:if="${#fields.hasErrors('user.nickname')}" th:errors="${user.nickname}" th:errorclass="errorClass"></p><!-- nickname 의 조건 어길 시 에러 출력-->
+                <p th:if="!${#fields.hasErrors('user.nickname')}"></p><!-- 없을 시 공간 할당 -->
+                <label for="nickname"></label><input th:type="text" class="form-control input-small" th:field="${user.nickname}" id="nickname" placeholder="닉네임 입력" max="10">
+            </div>
+            <div class="registerInput">
+                <p th:if="${#fields.hasErrors('user.userEmail')}" th:errors="${user.userEmail}" th:errorclass="errorClass"></p><!-- userEmail 의 조건 어길 시-->
+                <p th:if="!${#fields.hasErrors('user.userEmail')}"></p><!-- 없을 시 공간 할당 -->
+                <label for="email"></label><input th:type="text" class="form-control input-small" th:field="${user.userEmail}" id="email" placeholder="이메일 입력" max="50">
+            </div>
+            <div class="registerInput">
+                <p th:if="${#fields.hasErrors('user.password')}" th:errors="${user.password}" th:errorclass="errorClass"></p><!-- password 의 조건 어길 시 에러 출력 -->
+                <p th:if="!${#fields.hasErrors('user.password')}"></p><!-- 없을 시 공간 할당 -->
+                <label for="password"></label><input th:type="password" class="form-control input-small" th:field="${user.password}" id="password" placeholder="비밀번호 입력" max="20">
+            </div>
+            <div class="registerInput">
+                <p th:if="${#fields.hasErrors('user.passwordCheck')}" th:errors="${user.passwordCheck}" th:errorclass="errorClass"></p><!-- passwordCheck 의 조건 어길 시 에러 출력 -->
+                <p th:if="!${#fields.hasErrors('user.passwordCheck')}"></p><!-- 없을 시 공간 할당 -->
+                <label for="passwordCheck"></label><input th:type="password" class="form-control input-small" th:field="${user.passwordCheck}" id="passwordCheck" placeholder="비밀번호 확인" max="20">
+            </div>
+            <div>
+                <input type="hidden" id="imagePath" name="imagePath">
+            </div>
+            <div class="registerButtonDiv">
+                <button type="submit" class="btn btn-navy w-50" id=" registerBtn">회원가입</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- 프로필 클릭 시 아래 작동 -->
+<div class="modal" id="imageModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5>프로필 사진 선택</h5>
+            <button class="close-btn" onclick="hideModal()" type="button">X</button>
+        </div>
+        <div class="modal-body">
+            <div id="imageSelection">
+                <img src="/images/train.png" class="profile-img" alt="프로필 1" onclick="selectImage(this)"> <!-- 프로필 클릭 시 해당 이미지 src 를 hidden 타입에 할당 -->
+                <img src="/images/train_2.png" class="profile-img" alt="프로필 2" onclick="selectImage(this)"> <!-- 프로필 클릭 시 해당 이미지 src 를 hidden 타입에 할당 -->
+                <img src="/images/train_3.png" class="profile-img" alt="프로필 3" onclick="selectImage(this)"> <!-- 프로필 클릭 시 해당 이미지 src 를 hidden 타입에 할당 -->
+                <img src="/images/train_4.png" class="profile-img" alt="프로필 4" onclick="selectImage(this)"> <!-- 프로필 클릭 시 해당 이미지 src 를 hidden 타입에 할당 -->
+                <img src="/images/train_5.png" class="profile-img" alt="프로필 5" onclick="selectImage(this)"> <!-- 프로필 클릭 시 해당 이미지 src 를 hidden 타입에 할당 -->
+                <img src="/images/train_6.png" class="profile-img" alt="프로필 6" onclick="selectImage(this)"> <!-- 프로필 클릭 시 해당 이미지 src 를 hidden 타입에 할당 -->
+                <img src="/images/train_7.png" class="profile-img" alt="프로필 7" onclick="selectImage(this)"> <!-- 프로필 클릭 시 해당 이미지 src 를 hidden 타입에 할당 -->
+                <img src="/images/train_8.png" class="profile-img" alt="프로필 8" onclick="selectImage(this)"> <!-- 프로필 클릭 시 해당 이미지 src 를 hidden 타입에 할당 -->
+                <img src="/images/train_9.png" class="profile-img" alt="프로필 9" onclick="selectImage(this)"> <!-- 프로필 클릭 시 해당 이미지 src 를 hidden 타입에 할당 -->
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

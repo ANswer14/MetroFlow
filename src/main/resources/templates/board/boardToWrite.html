@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetroFlow</title>
+    <link rel="stylesheet" href="/css/board/boardToWrite.css">
+    <link href="/css/menu.css" rel="stylesheet">
+    <script defer src="/js/board/boardToWrite.js"></script>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: menuBar}"></div>
+
+<div class="container">
+    <div class="form-header">
+        <h2>게시글 작성</h2>
+    </div>
+
+    <form id="post-form" method="post" th:action="@{/board/write}">
+        <div class="form-group">
+            <!-- 호선 선택 부분 -->
+            <div class="select-container">
+                <label for="line-select"></label>
+                <select id="line-select" th:field="${board.stationLine}" required><!-- 모든 속성이 호선-->
+                    <option value="default">호선 선택</option>
+                    <option th:each="num : ${#numbers.sequence(1,9)}" th:value="${num + '호선'}"
+                            th:text="${num + '호선'}" th:class="${'line-' + num}"></option>
+                </select>
+
+                <!-- 역 선택 부분 -->
+                <label for="station-select"></label>
+                <select id="station-select" th:field="${board.stationName}" required>
+                    <option th:value="default">역 선택</option>
+                    <!-- 추후 DB 에서 가져온 역 정보를 이곳에 넣을 예정 -->
+                </select>
+            </div>
+        </div>
+            <!-- 로그인 후 글쓰려고 들어갔을 때 아이디를 볼 수 있도록 하는 기능 추가 -->
+            <span class="user-id">User : <span th:text="${board.user.nickname}"></span></span>
+            <input type="hidden" th:field="${board.user.userId}"/>
+
+        <!-- 제목 입력 영역: CSS와 일치하도록 클래스 추가 -->
+        <div class="form-group">
+            <label for="title"></label>
+            <input type="text" placeholder="제목을 입력하세요" th:field="${board.title}" id="title" class="title-input" required>
+        </div>
+
+        <!-- 내용 입력 영역: CSS와 일치하도록 클래스 추가 -->
+        <div class="form-group">
+            <label for="text"></label>
+            <textarea th:field="${board.boardText}" placeholder="내용을 입력하세요" id="text" class="text-area" required></textarea>
+        </div>
+
+        <!-- 글쓰기 버튼을 폼의 아래쪽에 배치 -->
+        <div class="form-group">
+            <button type="submit" class="write-button" th:if="${param.no == null}">글쓰기</button>
+        </div>
+    </form>
+
+    <form th:action="@{/board/update}" method="post" id="update-form">
+        <div class="form-group">
+            <input type="hidden" th:name="stationLine" id="hidden-station-line"/>
+            <input type="hidden" th:name="stationName" id="hidden-station-name"/>
+            <input type="hidden" th:name="title" id="hidden-title"/>
+            <input type="hidden" th:name="boardText" id="hidden-board-text"/>
+            <input type="hidden" th:name="boardNo" th:value="${board.boardNo}"/>
+            <button type="submit" class="fix-button" th:if="${param.no != null}">수정</button>
+        </div>
+    </form>
+</div>
+
+<!-- 호선 정보(hidden 필드) -->
+<input type="hidden" th:value="${station['lineOne']}" id="lineOne">
+<input type="hidden" th:value="${station['lineTwo']}" id="lineTwo">
+<input type="hidden" th:value="${station['lineThree']}" id="lineThree">
+<input type="hidden" th:value="${station['lineFour']}" id="lineFour">
+<input type="hidden" th:value="${station['lineFive']}" id="lineFive">
+<input type="hidden" th:value="${station['lineSix']}" id="lineSix">
+<input type="hidden" th:value="${station['lineSeven']}" id="lineSeven">
+<input type="hidden" th:value="${station['lineEight']}" id="lineEight">
+<input type="hidden" th:value="${station['lineNine']}" id="lineNine">
+<input type="hidden" th:value="${board.stationName}" id="stationName">
+</body>
+</html>

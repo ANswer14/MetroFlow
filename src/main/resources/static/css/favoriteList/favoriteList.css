@@ -1,0 +1,499 @@
+#stationList {
+    width: 300px;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    background-color: #ffffff;
+    position: absolute;
+    z-index: 1000;
+    display: none;
+}
+
+
+.calendar-select-time {
+    display: flex;
+    align-items: center;
+    gap: 13%;
+    margin-top: 0;
+    margin-left: 8px;
+}
+
+.year-label {
+    margin-right: 8px;
+    font-size: 15px;
+    color: black;
+}
+
+.year-text {
+    font-size: 13px;
+    color: black;
+    margin-top: 40px;
+    margin-bottom: -12px;
+    text-align: left;
+}
+
+.time-text {
+    font-size: 13px;
+    color: black;
+    margin-top: -17px;
+    margin-bottom: -2px;
+    text-align: right;
+    margin-right: 37.5%;
+}
+
+.month-label, .day-label {
+    margin-right: 8px;
+    margin-left: 8px;
+    font-size: 15px;
+    color: black;
+}
+
+.year-label, .month-label, .day-label {
+    margin-right: 8px;
+    font-size: 15px;
+    color: black;
+    display: flex;
+    align-items: center; /* 라벨도 중앙에 맞추기 */
+}
+
+#year, #month, #day {
+    width: 100px;
+    height: 40px;
+    font-size: 1rem;
+    padding: 5px;
+    text-align: center;
+    display: inline-block;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+
+#ampm, #hour, #minute {
+    width: 100px;
+    height: 40px;
+    font-size: 1rem;
+    padding: 5px;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin-top: 9%;
+}
+
+/* 컨테이너 기본 설정 */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: auto;
+    padding: 2rem 3rem;
+    background-color: white;
+}
+
+.search-area {
+    width: 20%;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 5rem;
+}
+
+.search-area h3 {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+.search-area h3:first-of-type {
+    margin-top: 5rem;
+}
+
+.search-area h3:nth-of-type(2) {
+    margin-top: 7rem;
+}
+
+.input-container,
+.direct-input
+{
+    width: 85%;
+    margin-bottom: 1rem;
+}
+
+.calendar-select-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.calendar-div {
+    flex: 1;
+    max-width: 33%;
+    display: flex;
+    align-items: center;
+    margin-left: -9px;
+}
+
+.time-select {
+    display: flex;
+    align-items: center;
+    margin-left: -40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+select {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    text-align: center;
+}
+
+/*input {*/
+/*    background-color: transparent;*/
+/*    border: none;*/
+/*    border-bottom: 1px solid #ccc;*/
+/*    font-size: 1rem;*/
+/*    padding: 0.5rem 0;*/
+/*    width: 15%;*/
+/*    text-align: center;*/
+/*}*/
+
+select:focus {
+    outline: none;
+    border-bottom: 2px solid #001f3f;
+}
+
+input:focus {
+    outline: none;
+    border-bottom: 2px solid #001f3f;
+}
+
+/* 시간 선택 상자 설정 */
+.time-select {
+    display: flex;
+    align-items: center; /* 세로 가운데 정렬 */
+    margin-left: -40px;
+    margin-top: -5px; /* `.time-text`와 가까워지도록 위쪽 여백 줄임 */
+    margin-bottom: 20px;
+}
+
+.line-number-div {
+    width: 8%;
+}
+
+.station-name-div {
+}
+
+.favoriteList_time {
+    margin: 10px 0;
+}
+
+.favoriteList-content {
+    flex-direction: column;
+    flex: 0 0 270px;
+    margin: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.middleItems {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    width: 60%;
+}
+
+.rightItems {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.line-number {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    color: white;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.station-name {
+    margin-left: 0.5rem;
+}
+
+.status-bar {
+    display: flex;
+    position: relative;
+    width: 35%;
+    height: 8px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-right: 0.5rem;
+    margin-top: 8px;
+    margin-left: 8px;
+}
+
+/* 혼잡도 바 스타일 */
+.overcrowded {
+    width: 100%;
+    height: 100%;
+    background-color: red;
+}
+
+.crowded {
+    width: 100%;
+    height: 100%;
+    background-color: red;
+}
+
+.normal {
+    width: 100%;
+    height: 100%;
+    background-color: orange;
+}
+
+.spacious {
+    width: 100%;
+    height: 100%;
+    background-color: green;
+}
+
+.default-congestion {
+    color: gray;
+}
+
+.status-time {
+    color: #000000;
+    font-size: 0.9rem;
+    margin-right: 1rem;
+}
+
+.progress {
+    height: 100%;
+}
+
+.status-label {
+    font-size: 0.9rem;
+}
+
+#favoriteList_header {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.favoriteList_container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 97.5%;
+    background-color: #ffffff;
+    padding: 10px;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 1rem;
+    color: #333333;
+    margin-top: 2px;
+}
+
+.paging-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.paging a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #001f3f;
+}
+
+/* 기본 상태 - 테두리와 밑줄 없음 */
+.paging a.active {
+    font-weight: bold;
+    text-decoration: none; /* 밑줄 없음 */
+    color: #001f3f;
+    border: none; /* 기본적으로 테두리 없음 */
+    padding: 5px; /* 네모 테두리가 생길 때 텍스트와 간격을 유지 */
+}
+
+/* 마우스를 올렸을 때 네모 테두리 추가 */
+.paging a.active:hover {
+    border: 1px solid #001f3f; /* 마우스를 올렸을 때 네모 테두리 */
+    padding: 4px; /* 테두리와 텍스트 사이의 간격 */
+    border-radius: 4px; /* 둥근 모서리를 원하면 설정, 아니면 제거 가능 */
+}
+
+
+.paging span {
+    margin: 0 5px;
+}
+
+.input-calendar {
+    margin-top: 15px;
+    flex: 1;
+    max-width: 50%;
+    margin-right: 20px;
+}
+
+.input_time {
+    margin-top: 15px;
+    flex: 1;
+    max-width: 50%;
+}
+
+.time_day_check {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    font-size: 15px;
+}
+
+/* 기본 버튼 스타일 */
+.calendar-select-button {
+    background-color: transparent; /* 배경 투명 */
+    border: none; /* 테두리 없애기 */
+    padding: 5px; /* 여백 없애기 */
+    cursor: pointer; /* 마우스 포인터 표시 */
+    outline: none; /* 포커스 시 아웃라인 없애기 */
+    border-bottom: 1px solid transparent; /* 기본적으로 투명한 밑줄 */
+    margin-top: 0.5%;
+}
+
+.icon-search {
+    width: 25px; /* 아이콘 너비 */
+    height: 25px; /* 아이콘 높이 */
+}
+
+/* 마우스를 올렸을 때 밑줄 색상 변경 */
+.calendar-select-button:hover {
+    border-bottom: 1px solid #000; /* 마우스를 올렸을 때 밑줄 */
+}
+
+.time-select-button {
+    background-color: transparent; /* 배경 투명 */
+    border: none; /* 테두리 없애기 */
+    padding: 5px; /* 여백 없애기 */
+    cursor: pointer; /* 마우스 포인터 표시 */
+    outline: none; /* 포커스 시 아웃라인 없애기 */
+    margin-top: 9%;
+}
+
+.time-select-button:hover {
+    border-bottom: 1px solid #000; /* 마우스를 올렸을 때 밑줄 */
+}
+
+
+/* 부모 요소에 position: relative 추가 */
+.topItems {
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-weight: bold;
+    margin-bottom: 10px;
+    /*margin-left: 3%;*/
+    position: relative; /* 버튼이 이 부모 요소를 기준으로 위치함 */
+}
+
+/* 삭제 버튼 스타일 */
+.delete_favorite_button {
+    background-color: #fff; /* 기본 배경은 흰색 */
+    color: red; /* 기본 글자색은 빨간색 */
+    border: 1px solid red; /* 테두리 빨간색 */
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none; /* 포커스 시 아웃라인 없애기 */
+    transition: background-color 0.3s, color 0.3s; /* 배경과 글자색 전환 애니메이션 */
+    border-radius: 5px;
+
+    position: absolute; /* 위치를 고정 */
+    top: 0; /* 부모 요소의 위쪽에 배치 */
+    right: 0; /* 부모 요소의 오른쪽에 배치 */
+}
+
+/* 마우스 호버 시 삭제 버튼 스타일 */
+.delete_favorite_button:hover {
+    background-color: red; /* 배경 빨간색 */
+    color: #fff; /* 글자색 흰색 */
+    border-radius: 5px;
+}
+
+/* 호선 별 마크 (타임리프 렌더링 처리 엮인 부분이니 건드리지 말기)*/
+.line-number-div {
+    align-content: flex-start;
+}
+
+.lines {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    color: white;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.default-line {
+    background-color: transparent; /* 기본 스타일 */
+    padding: 5px;
+
+}
+
+.line1 {
+    background-color: #0032A0;
+    color: white;
+}
+
+.line2 {
+    background-color: #00B140;
+    color: white;
+}
+
+.line3 {
+    background-color: #FC4C02;
+    color: white;
+}
+
+.line4 {
+    background-color: #00A9E0;
+    color: white;
+}
+
+.line5 {
+    background-color: #A05EB5;
+    color: white;
+}
+
+.line6 {
+    background-color: #A9431E;
+    color: white;
+}
+
+.line7 {
+    background-color: #67823A;
+    color: white;
+}
+
+.line8 {
+    background-color: #E31C79;
+    color: white;
+}
+
+.line9 {
+    background-color: #8C8279;
+    color: white;
+}
+
+
